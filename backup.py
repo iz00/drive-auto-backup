@@ -1,5 +1,7 @@
 import argparse
 
+from commands.init import create_config_file
+
 
 parser = argparse.ArgumentParser(
     description="Automate backups to Google Drive",
@@ -17,6 +19,7 @@ init_command_parser = main_commands_subparser.add_parser(
     help="Create a blank config.json file",
     epilog="File is only created if it doesn't already exist",
 )
+init_command_parser.set_defaults(func=create_config_file)
 
 
 # ADD COMMAND
@@ -163,3 +166,7 @@ all_or_unauthenticated_group.add_argument(
     action="store_true",
     help="All yet unauthenticated Google Drive accounts in config.json",
 )
+
+
+arguments = parser.parse_args()
+arguments.func(arguments)
