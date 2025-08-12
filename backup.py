@@ -169,4 +169,8 @@ all_or_unauthenticated_group.add_argument(
 
 
 arguments = parser.parse_args()
-arguments.func(arguments)
+
+command_arguments = vars(arguments).copy()
+del command_arguments["func"]
+
+arguments.func(command_arguments)
