@@ -1,18 +1,8 @@
-import json
+from utils.config_setup import create_config_file
 
 
-def create_config_file(args):
-    config_data = {
-        "default_drive_account": "",
-        "default_frequency": "",
-        "default_time": "",
-        "backups": [],
-    }
-
-    try:
-        with open("config.json", "x") as config_file:
-            json.dump(config_data, config_file, indent=4)
-            print("Created file config.json.")
-
-    except FileExistsError:
+def init_handler(args):
+    if create_config_file():
+        print("Created file config.json.")
+    else:
         print("File config.json already exists.")

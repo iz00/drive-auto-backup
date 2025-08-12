@@ -1,6 +1,6 @@
 import argparse
 
-from commands.init import create_config_file
+from commands.init import init_handler
 
 
 parser = argparse.ArgumentParser(
@@ -19,7 +19,7 @@ init_command_parser = main_commands_subparser.add_parser(
     help="Create a blank config.json file",
     epilog="File is only created if it doesn't already exist",
 )
-init_command_parser.set_defaults(func=create_config_file)
+init_command_parser.set_defaults(func=init_handler)
 
 
 # ADD COMMAND
