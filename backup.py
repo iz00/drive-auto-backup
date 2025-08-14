@@ -28,13 +28,26 @@ add_command_parser = main_commands_subparser.add_parser(
     help="Add a new backup to config.json",
     epilog="Also check and update backups in config.json. Schedule backups after adding them",
 )
-add_command_parser.add_argument("--local", help="Local path to backup", metavar="PATH")
 add_command_parser.add_argument(
-    "--drive", help="Drive folder to backup to", metavar="DRIVE_FOLDER"
+    "--local", help="Local path to backup", metavar="PATH", dest="local_path"
 )
-add_command_parser.add_argument("--account", help="Google Drive account")
 add_command_parser.add_argument(
-    "--freq", help="Backup frequency (e.g. 15m, 2h, 1d, 1w)", metavar="FREQUENCY"
+    "--drive",
+    help="Drive folder to backup to",
+    metavar="DRIVE_FOLDER",
+    dest="drive_folder",
+)
+add_command_parser.add_argument(
+    "--account",
+    help="Google Drive account",
+    metavar="DRIVE_ACCOUNT",
+    dest="drive_account",
+)
+add_command_parser.add_argument(
+    "--freq",
+    help="Backup frequency (e.g. 15m, 2h, 1d, 1w)",
+    metavar="FREQUENCY",
+    dest="frequency",
 )
 add_command_parser.add_argument("--time", help="Time backup is done", metavar="HH:MM")
 
@@ -60,14 +73,25 @@ update_command_parser.add_argument(
     "ids", nargs="+", help="IDs of backups in config.json", type=int
 )
 update_command_parser.add_argument(
-    "--local", help="Local path to backup", metavar="PATH"
+    "--local", help="Local path to backup", metavar="PATH", dest="local_path"
 )
 update_command_parser.add_argument(
-    "--drive", help="Drive folder to backup to", metavar="DRIVE_FOLDER"
+    "--drive",
+    help="Drive folder to backup to",
+    metavar="DRIVE_FOLDER",
+    dest="drive_folder",
 )
-update_command_parser.add_argument("--account", help="Google Drive account")
 update_command_parser.add_argument(
-    "--freq", help="Backup frequency (e.g. 15m, 2h, 1d, 1w)", metavar="FREQUENCY"
+    "--account",
+    help="Google Drive account",
+    metavar="DRIVE_ACCOUNT",
+    dest="drive_account",
+)
+update_command_parser.add_argument(
+    "--freq",
+    help="Backup frequency (e.g. 15m, 2h, 1d, 1w)",
+    metavar="FREQUENCY",
+    dest="frequency",
 )
 update_command_parser.add_argument(
     "--time", help="Time backup is done", metavar="HH:MM"
@@ -97,11 +121,17 @@ default_command_parser = main_commands_subparser.add_parser(
     help="Set default values for backups",
     argument_default=argparse.SUPPRESS,
 )
-default_command_parser.add_argument("--account", help="Default Google Drive account")
+default_command_parser.add_argument(
+    "--account",
+    help="Default Google Drive account",
+    metavar="DRIVE_ACCOUNT",
+    dest="drive_account",
+)
 default_command_parser.add_argument(
     "--freq",
     help="Default frequency for backups (e.g. 15m, 2h, 1d, 1w)",
     metavar="FREQUENCY",
+    dest="frequency",
 )
 default_command_parser.add_argument(
     "--time", help="Default time for backups", metavar="HH:MM"
