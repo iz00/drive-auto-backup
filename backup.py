@@ -33,14 +33,14 @@ add_command_parser.add_argument(
 )
 add_command_parser.add_argument(
     "--drive",
-    help="Drive folder to backup to",
-    metavar="DRIVE_FOLDER",
+    help="Drive folder to backup to (ID available in URL)",
+    metavar="DRIVE_FOLDER_ID",
     dest="drive_folder",
 )
 add_command_parser.add_argument(
     "--account",
-    help="Google Drive account",
-    metavar="DRIVE_ACCOUNT",
+    help="Google Drive account email",
+    metavar="EMAIL",
     dest="drive_account",
 )
 add_command_parser.add_argument(
@@ -77,14 +77,14 @@ update_command_parser.add_argument(
 )
 update_command_parser.add_argument(
     "--drive",
-    help="Drive folder to backup to",
-    metavar="DRIVE_FOLDER",
+    help="Drive folder to backup to (ID available in URL)",
+    metavar="DRIVE_FOLDER_ID",
     dest="drive_folder",
 )
 update_command_parser.add_argument(
     "--account",
-    help="Google Drive account",
-    metavar="DRIVE_ACCOUNT",
+    help="Google Drive account email",
+    metavar="EMAIL",
     dest="drive_account",
 )
 update_command_parser.add_argument(
@@ -123,8 +123,8 @@ default_command_parser = main_commands_subparser.add_parser(
 )
 default_command_parser.add_argument(
     "--account",
-    help="Default Google Drive account",
-    metavar="DRIVE_ACCOUNT",
+    help="Default Google Drive account email",
+    metavar="EMAIL",
     dest="drive_account",
 )
 default_command_parser.add_argument(
@@ -180,10 +180,10 @@ unschedule_command_parser.add_argument(
 authenticate_command_parser = main_commands_subparser.add_parser(
     "authenticate",
     aliases=["auth"],
-    help="Authenticate Google Drive accounts",
+    help="Authenticate Google Drive accounts emails",
 )
 authenticate_command_parser.add_argument(
-    "accounts", nargs="*", help="Google Drive accounts"
+    "accounts", nargs="*", help="Google Drive accounts emails"
 )
 all_or_unauthenticated_group = (
     authenticate_command_parser.add_mutually_exclusive_group()
