@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from pathlib import Path
 from re import fullmatch, search as regex_search
 from time import strftime, strptime
@@ -63,3 +64,12 @@ def validate_and_get_time(time: str) -> str:
 
     except ValueError:
         raise ValueError("Invalid time format (expected HH:MM in 24-hour format).")
+
+
+CONFIGS_VALIDATORS: dict[str : Callable[[str], str]] = {
+    "local_path": validate_and_get_absolute_local_path,
+    "drive_folder": validate_and_get_drive_folder_id,
+    "drive_account": validate_and_get_drive_account_email,
+    "frequency": validate_and_get_frequency,
+    "time": validate_and_get_time,
+}
