@@ -1,10 +1,12 @@
 from pathlib import Path
 from re import fullmatch, search as regex_search
+from time import strftime, strptime
 
 from email_validator import EmailNotValidError, validate_email
 
 
 DEFAULT_DRIVE_FOLDER = "root"
+DEFAULT_BACKUP_TIME = "12:00"
 
 
 def validate_and_get_absolute_local_path(path: str) -> str:
@@ -50,3 +52,14 @@ def validate_and_get_frequency(frequency: str) -> str:
         raise ValueError("Invalid frequency (expected positive number).")
 
     return f"{quantity}{match.group('unit')[0]}"
+
+
+def validate_and_get_time(time: str) -> str:
+    if not time:
+        return DEFAULT_BACKUP_TIME
+
+    try:
+        return strftime("%H:%M", strptime(time, "%H:%M"))
+
+    except ValueError:
+        raise ValueError("Invalid time format (expected HH:MM in 24-hour format).")
