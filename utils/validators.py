@@ -33,3 +33,20 @@ def validate_and_get_drive_account_email(email: str) -> str:
 
     except EmailNotValidError as error:
         raise ValueError(f"Invalid email account. {error}")
+
+
+def validate_and_get_frequency(frequency: str) -> str:
+    if not (
+        match := regex_search(
+            r"(?P<quantity>\d+)(?P<unit>m(?:inutes)?|h(?:ours)?|d(?:ays)?|w(?:eeks)?)",
+            frequency.lower(),
+        )
+    ):
+        raise ValueError(
+            "Invalid frequency format (expected like '10m', '2h', '3d', '1w')."
+        )
+
+    if (quantity := int(match.group("quantity"))) <= 0:
+        raise ValueError("Invalid frequency (expected positive number).")
+
+    return f"{quantity}{match.group('unit')[0]}"
