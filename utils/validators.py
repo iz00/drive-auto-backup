@@ -1,6 +1,8 @@
 from pathlib import Path
 from re import fullmatch, search as regex_search
 
+from email_validator import EmailNotValidError, validate_email
+
 
 DEFAULT_DRIVE_FOLDER = "root"
 
@@ -23,3 +25,11 @@ def validate_and_get_drive_folder_id(drive_folder: str) -> str:
         return drive_folder
 
     raise ValueError("Invalid Google Drive folder ID.")
+
+
+def validate_and_get_drive_account_email(email: str) -> str:
+    try:
+        return validate_email(email).normalized
+
+    except EmailNotValidError as error:
+        raise ValueError(f"Invalid email account. {error}")
