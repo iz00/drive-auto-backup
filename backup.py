@@ -1,5 +1,6 @@
 import argparse
 
+from commands.add import add_handler
 from commands.init import init_handler
 
 
@@ -50,6 +51,7 @@ add_command_parser.add_argument(
     dest="frequency",
 )
 add_command_parser.add_argument("--time", help="Time backup is done", metavar="HH:MM")
+add_command_parser.set_defaults(func=add_handler)
 
 
 # REMOVE COMMAND
