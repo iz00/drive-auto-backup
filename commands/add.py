@@ -14,6 +14,9 @@ def add_handler(args: dict) -> None:
     for config in args.keys():
         args[config] = prompt_and_validate(config, args[config])
 
+    if add_backup_to_config_file(args):
+        print("New backup succesfully added to config.json.")
+
 
 def get_default_configs() -> dict:
     try:
@@ -47,10 +50,50 @@ def prompt_and_validate(config: str, value: str | None) -> str:
     validator: Callable[[str], str] = CONFIGS_VALIDATORS[config]
 
     while True:
-        value: str | None = value or input(f"{config.replace('_', ' ').title()}: ")
+        value: str = value or input(f"{config.replace('_', ' ').title()}: ")
         try:
             return validator(value.replace(" ", ""))
         except ValueError as error:
             print(error)
             # Force re-prompt
             value = None
+
+
+def get_all_configs() -> dict:
+    with open("config.json") as config_file:
+        return json.load(config_file)
+
+
+def get_next_backup_id(backups: list[dict]) -> int:
+    if not backups:
+        return 0
+
+    return max(backup.get("id", -1) for backup in backups) + 1
+
+
+def add_backup_to_config_file(configs: dict) -> bool:
+    try:
+        total_configs = get_all_configs()
+    except OSError:
+        print("Error: config.json not found.")
+        return False
+
+    try:
+        new_backup_id = get_next_backup_id(total_configs["backups"])
+    except KeyError:
+        print('Error: config.json is malformed (missing "backups" array).')
+        return False
+
+    new_backup_configs = {
+        "id": new_backup_id,
+        **configs,
+        "last_backup": None,
+        "scheduled": False,
+    }
+
+    total_configs["backups"].append(new_backup_configs)
+
+    with open("config.json", "w") as config_file:
+        json.dump(total_configs, config_file, ensure_ascii=False, indent=4)
+
+    return True
