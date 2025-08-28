@@ -2,6 +2,7 @@ import argparse
 
 from commands.add import add_handler
 from commands.init import init_handler
+from commands.remove import remove_handler
 
 
 parser = argparse.ArgumentParser(
@@ -63,6 +64,7 @@ remove_command_parser = main_commands_subparser.add_parser(
 remove_command_parser.add_argument(
     "ids", nargs="+", type=int, help="IDs of backups in config.json"
 )
+remove_command_parser.set_defaults(func=remove_handler)
 
 
 # UPDATE COMMAND
