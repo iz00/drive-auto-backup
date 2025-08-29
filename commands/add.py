@@ -36,7 +36,7 @@ def prompt_and_validate(config: str, value: str | None) -> str:
     while True:
         value: str = value or input(f"{config.replace('_', ' ').title()}: ")
         try:
-            return validator(value.replace(" ", ""))
+            return validator(value)
         except ValueError as error:
             print(error)
             # Force re-prompt

@@ -18,6 +18,8 @@ def validate_and_get_absolute_local_path(path: str) -> str:
 
 
 def validate_and_get_drive_folder_id(drive_folder: str) -> str:
+    drive_folder = drive_folder.replace(" ", "")
+
     if not drive_folder or drive_folder.lower() in ("/", "root", "home"):
         return DEFAULT_DRIVE_FOLDER
 
@@ -31,6 +33,8 @@ def validate_and_get_drive_folder_id(drive_folder: str) -> str:
 
 
 def validate_and_get_drive_account_email(email: str) -> str:
+    email = email.replace(" ", "")
+
     try:
         return validate_email(email).normalized
 
@@ -39,6 +43,8 @@ def validate_and_get_drive_account_email(email: str) -> str:
 
 
 def validate_and_get_frequency(frequency: str) -> str:
+    frequency = frequency.replace(" ", "")
+
     if not (
         match := regex_search(
             r"(?P<quantity>\d+)(?P<unit>m(?:inutes)?|h(?:ours)?|d(?:ays)?|w(?:eeks)?)",
@@ -56,6 +62,8 @@ def validate_and_get_frequency(frequency: str) -> str:
 
 
 def validate_and_get_time(time: str) -> str:
+    time = time.replace(" ", "")
+
     if not time:
         return DEFAULT_BACKUP_TIME
 
