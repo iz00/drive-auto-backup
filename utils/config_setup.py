@@ -40,6 +40,10 @@ def load_config(config_file: str | Path = CONFIG_PATH) -> dict:
         raise ValueError('Config file is malformed: missing "backups" key.')
     if not isinstance(backups, list):
         raise ValueError('Config file is malformed: "backups" must be a list.')
+    if not all(isinstance(backup, dict) for backup in backups):
+        raise ValueError(
+            'Config file is malformed: all elements in "backups" must be dictionaries.'
+        )
 
     return config
 
