@@ -3,6 +3,7 @@ import argparse
 from commands.add import add_handler
 from commands.init import init_handler
 from commands.remove import remove_handler
+from commands.update import update_handler
 
 
 parser = argparse.ArgumentParser(
@@ -100,6 +101,7 @@ update_command_parser.add_argument(
 update_command_parser.add_argument(
     "--time", help="Time backup is done", metavar="HH:MM"
 )
+update_command_parser.set_defaults(func=update_handler)
 
 
 # LIST COMMAND
