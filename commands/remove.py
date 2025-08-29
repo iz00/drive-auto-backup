@@ -1,3 +1,4 @@
+from utils.backup_utils import filter_existing_backup_ids
 from utils.config_setup import load_config, save_config_to_file
 
 
@@ -14,7 +15,7 @@ def remove_handler(args: dict) -> None:
         print('Error: config.json is malformed (missing "backups" array).')
         return
 
-    removable_ids = get_removable_backups_ids(backups, args["ids"])
+    removable_ids = filter_existing_backup_ids(backups, args["ids"])
 
     if not removable_ids:
         print("No matching backup IDs found. Nothing was removed.")
@@ -27,13 +28,3 @@ def remove_handler(args: dict) -> None:
     save_config_to_file(total_configs)
 
     print("Removed backups with IDs:", *removable_ids)
-
-
-def get_removable_backups_ids(
-    backups: list[dict], ids_to_remove: list[int]
-) -> set[int]:
-    backups_ids: set[int] = {
-        backup.get("id") for backup in backups if isinstance(backup.get("id"), int)
-    }
-
-    return {backup_id for backup_id in ids_to_remove if backup_id in backups_ids}
