@@ -53,24 +53,20 @@ def get_next_backup_id(backups: list[dict]) -> int:
 def add_backup_to_config_file(backup: dict) -> bool:
     try:
         total_configs = load_config()
-    except OSError:
-        print("Error: config.json not found.")
+    except ValueError as error:
+        print(error)
         return False
 
-    try:
-        new_backup_id = get_next_backup_id(total_configs["backups"])
-    except KeyError:
-        print('Error: config.json is malformed (missing "backups" array).')
-        return False
+    new_backup_id = get_next_backup_id(total_configs["backups"])
 
-    new_backup_configs = {
+    new_backup = {
         "id": new_backup_id,
         **backup,
         "last_backup": None,
         "scheduled": False,
     }
 
-    total_configs["backups"].append(new_backup_configs)
+    total_configs["backups"].append(new_backup)
 
     save_config_to_file(total_configs)
 
