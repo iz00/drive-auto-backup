@@ -4,6 +4,7 @@ from commands.add import add_handler
 from commands.init import init_handler
 from commands.remove import remove_handler
 from commands.update import update_handler
+from commands.default import default_handler
 
 
 parser = argparse.ArgumentParser(
@@ -142,6 +143,7 @@ default_command_parser.add_argument(
 default_command_parser.add_argument(
     "--time", help="Default time for backups", metavar="HH:MM"
 )
+default_command_parser.set_defaults(func=default_handler)
 
 
 # RUN COMMAND
