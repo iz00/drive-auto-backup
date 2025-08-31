@@ -81,3 +81,21 @@ CONFIGS_VALIDATORS: dict[str : Callable[[str], str]] = {
     "frequency": validate_and_get_frequency,
     "time": validate_and_get_time,
 }
+
+
+def validate_configs(args: dict) -> dict:
+    """
+    Validate a dict of configs, returning only valid entries.
+    Invalid values are reported and skipped.
+    """
+    valid_configs = {}
+
+    for config, value in args.items():
+        validator: Callable[[str], str] = CONFIGS_VALIDATORS[config]
+
+        try:
+            valid_configs[config] = validator(value)
+        except ValueError as error:
+            print(error)
+
+    return valid_configs
