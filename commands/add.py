@@ -7,12 +7,18 @@ from utils.validators import CONFIGS_VALIDATORS
 def add_handler(args: dict) -> None:
     create_config_file()
 
-    fill_empty_values(args, get_default_configs())
+    try:
+        total_configs = load_config()
+    except ValueError as error:
+        print(error)
+        return
+
+    fill_empty_values(args, get_default_configs(total_configs))
 
     for config in args.keys():
         args[config] = prompt_and_validate(config, args[config])
 
-    if add_backup_to_config_file(args):
+    if add_backup_to_config_file(args, total_configs):
         print("New backup succesfully added to config.json.")
 
 
@@ -50,13 +56,7 @@ def get_next_backup_id(backups: list[dict]) -> int:
     return max(backup.get("id", -1) for backup in backups) + 1
 
 
-def add_backup_to_config_file(backup: dict) -> bool:
-    try:
-        total_configs = load_config()
-    except ValueError as error:
-        print(error)
-        return False
-
+def add_backup_to_config_file(backup: dict, total_configs: dict) -> bool:
     new_backup_id = get_next_backup_id(total_configs["backups"])
 
     new_backup = {

@@ -55,13 +55,9 @@ def save_config_to_file(
         json.dump(new_config, file, ensure_ascii=False, indent=4)
 
 
-def get_default_configs(config_file: str | Path = CONFIG_PATH) -> dict:
-    try:
-        configs = load_config(config_file)
-        return {
-            "drive_account": configs.get("default_drive_account"),
-            "frequency": configs.get("default_frequency"),
-            "time": configs.get("default_time"),
-        }
-    except OSError:
-        return {}
+def get_default_configs(configs: dict) -> dict:
+    return {
+        "drive_account": configs.get("default_drive_account"),
+        "frequency": configs.get("default_frequency"),
+        "time": configs.get("default_time"),
+    }
