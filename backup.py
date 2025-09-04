@@ -5,6 +5,7 @@ from commands.init import init_handler
 from commands.remove import remove_handler
 from commands.update import update_handler
 from commands.default import default_handler
+from commands.list import list_handler
 
 
 parser = argparse.ArgumentParser(
@@ -120,6 +121,7 @@ list_command_parser.add_argument(
 list_command_parser.add_argument(
     "-v", "--verbose", action="store_true", help="Show more info about each backup"
 )
+list_command_parser.set_defaults(func=list_handler)
 
 
 # DEFAULT COMMAND
