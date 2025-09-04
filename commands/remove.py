@@ -1,4 +1,4 @@
-from utils.backup_utils import filter_existing_backup_ids
+from utils.backup_utils import *
 from utils.config_setup import load_config, save_config_to_file
 
 
@@ -9,7 +9,9 @@ def remove_handler(args: dict) -> None:
         print(error)
         return
 
-    removable_ids = filter_existing_backup_ids(total_configs["backups"], args["ids"])
+    removable_ids = filter_existing_backup_ids(
+        get_backups_ids(total_configs["backups"]), args["ids"]
+    )
 
     if not removable_ids:
         print("No matching backup IDs found. Nothing was removed.")
