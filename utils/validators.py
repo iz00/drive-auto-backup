@@ -7,6 +7,7 @@ from email_validator import EmailNotValidError, validate_email
 
 
 DEFAULT_DRIVE_FOLDER = "root"
+DEFAULT_BACKUP_FREQUENCY = "1w"
 DEFAULT_BACKUP_TIME = "12:00"
 
 
@@ -44,6 +45,9 @@ def validate_and_get_drive_account_email(email: str) -> str:
 
 def validate_and_get_frequency(frequency: str) -> str:
     frequency = frequency.replace(" ", "")
+
+    if not frequency:
+        return DEFAULT_BACKUP_FREQUENCY
 
     if not (
         match := regex_search(
