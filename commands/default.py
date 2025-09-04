@@ -1,3 +1,4 @@
+from utils.backup_utils import format_config_label
 from utils.config_setup import load_config, save_config_to_file
 from utils.validators import validate_configs
 
@@ -36,4 +37,4 @@ def default_handler(args: dict) -> None:
 
     for config, value in default_configs.items():
         value = value if value else '""'
-        print(f"{config.replace('_', ' ').capitalize()} updated to {value}.")
+        print(f"{format_config_label(config)} updated to {value}.")

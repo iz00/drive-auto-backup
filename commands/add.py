@@ -1,5 +1,6 @@
 from collections.abc import Callable
 
+from utils.backup_utils import format_config_label
 from utils.config_setup import *
 from utils.validators import CONFIGS_VALIDATORS
 
@@ -40,7 +41,7 @@ def prompt_and_validate(config: str, value: str | None) -> str:
     validator: Callable[[str], str] = CONFIGS_VALIDATORS[config]
 
     while True:
-        value: str = value or input(f"{config.replace('_', ' ').title()}: ")
+        value: str = value or input(f"{format_config_label(config)}: ")
         try:
             return validator(value)
         except ValueError as error:
